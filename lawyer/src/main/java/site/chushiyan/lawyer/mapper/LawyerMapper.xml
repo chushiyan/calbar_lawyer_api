@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="site.chushiyan.lawyer.mapper.LawyerMapper" >
+  <resultMap id="BaseResultMap" type="site.chushiyan.lawyer.pojo.Lawyer" >
+    <id column="number" property="number" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="license_status" property="licenseStatus" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="admission_date" property="admissionDate" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="county" property="county" jdbcType="VARCHAR" />
+    <result column="phone_number" property="phoneNumber" jdbcType="VARCHAR" />
+    <result column="fax_number" property="faxNumber" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="law_school" property="lawSchool" jdbcType="VARCHAR" />
+    <result column="cla_sections" property="claSections" jdbcType="VARCHAR" />
+    <result column="certified_legal_specialty" property="certifiedLegalSpecialty" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    number, name, license_status, city, admission_date, address, county, phone_number, 
+    fax_number, email, law_school, cla_sections, certified_legal_specialty
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="site.chushiyan.lawyer.pojo.LawyerExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from lawyer
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from lawyer
+    where number = #{number,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from lawyer
+    where number = #{number,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="site.chushiyan.lawyer.pojo.LawyerExample" >
+    delete from lawyer
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="site.chushiyan.lawyer.pojo.Lawyer" >
+    insert into lawyer (number, name, license_status, 
+      city, admission_date, address, 
+      county, phone_number, fax_number, 
+      email, law_school, cla_sections, 
+      certified_legal_specialty)
+    values (#{number,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{licenseStatus,jdbcType=VARCHAR}, 
+      #{city,jdbcType=VARCHAR}, #{admissionDate,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{county,jdbcType=VARCHAR}, #{phoneNumber,jdbcType=VARCHAR}, #{faxNumber,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{lawSchool,jdbcType=VARCHAR}, #{claSections,jdbcType=VARCHAR}, 
+      #{certifiedLegalSpecialty,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="site.chushiyan.lawyer.pojo.Lawyer" >
+    insert into lawyer
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="number != null" >
+        number,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="licenseStatus != null" >
+        license_status,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="admissionDate != null" >
+        admission_date,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="county != null" >
+        county,
+      </if>
+      <if test="phoneNumber != null" >
+        phone_number,
+      </if>
+      <if test="faxNumber != null" >
+        fax_number,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="lawSchool != null" >
+        law_school,
+      </if>
+      <if test="claSections != null" >
+        cla_sections,
+      </if>
+      <if test="certifiedLegalSpecialty != null" >
+        certified_legal_specialty,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="number != null" >
+        #{number,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="licenseStatus != null" >
+        #{licenseStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="admissionDate != null" >
+        #{admissionDate,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="county != null" >
+        #{county,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNumber != null" >
+        #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="faxNumber != null" >
+        #{faxNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="lawSchool != null" >
+        #{lawSchool,jdbcType=VARCHAR},
+      </if>
+      <if test="claSections != null" >
+        #{claSections,jdbcType=VARCHAR},
+      </if>
+      <if test="certifiedLegalSpecialty != null" >
+        #{certifiedLegalSpecialty,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="site.chushiyan.lawyer.pojo.LawyerExample" resultType="java.lang.Integer" >
+    select count(*) from lawyer
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update lawyer
+    <set >
+      <if test="record.number != null" >
+        number = #{record.number,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.licenseStatus != null" >
+        license_status = #{record.licenseStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.city != null" >
+        city = #{record.city,jdbcType=VARCHAR},
+      </if>
+      <if test="record.admissionDate != null" >
+        admission_date = #{record.admissionDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null" >
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.county != null" >
+        county = #{record.county,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phoneNumber != null" >
+        phone_number = #{record.phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.faxNumber != null" >
+        fax_number = #{record.faxNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null" >
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lawSchool != null" >
+        law_school = #{record.lawSchool,jdbcType=VARCHAR},
+      </if>
+      <if test="record.claSections != null" >
+        cla_sections = #{record.claSections,jdbcType=VARCHAR},
+      </if>
+      <if test="record.certifiedLegalSpecialty != null" >
+        certified_legal_specialty = #{record.certifiedLegalSpecialty,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update lawyer
+    set number = #{record.number,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      license_status = #{record.licenseStatus,jdbcType=VARCHAR},
+      city = #{record.city,jdbcType=VARCHAR},
+      admission_date = #{record.admissionDate,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR},
+      county = #{record.county,jdbcType=VARCHAR},
+      phone_number = #{record.phoneNumber,jdbcType=VARCHAR},
+      fax_number = #{record.faxNumber,jdbcType=VARCHAR},
+      email = #{record.email,jdbcType=VARCHAR},
+      law_school = #{record.lawSchool,jdbcType=VARCHAR},
+      cla_sections = #{record.claSections,jdbcType=VARCHAR},
+      certified_legal_specialty = #{record.certifiedLegalSpecialty,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="site.chushiyan.lawyer.pojo.Lawyer" >
+    update lawyer
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="licenseStatus != null" >
+        license_status = #{licenseStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="admissionDate != null" >
+        admission_date = #{admissionDate,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="county != null" >
+        county = #{county,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNumber != null" >
+        phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="faxNumber != null" >
+        fax_number = #{faxNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="lawSchool != null" >
+        law_school = #{lawSchool,jdbcType=VARCHAR},
+      </if>
+      <if test="claSections != null" >
+        cla_sections = #{claSections,jdbcType=VARCHAR},
+      </if>
+      <if test="certifiedLegalSpecialty != null" >
+        certified_legal_specialty = #{certifiedLegalSpecialty,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where number = #{number,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="site.chushiyan.lawyer.pojo.Lawyer" >
+    update lawyer
+    set name = #{name,jdbcType=VARCHAR},
+      license_status = #{licenseStatus,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      admission_date = #{admissionDate,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      county = #{county,jdbcType=VARCHAR},
+      phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      fax_number = #{faxNumber,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      law_school = #{lawSchool,jdbcType=VARCHAR},
+      cla_sections = #{claSections,jdbcType=VARCHAR},
+      certified_legal_specialty = #{certifiedLegalSpecialty,jdbcType=VARCHAR}
+    where number = #{number,jdbcType=VARCHAR}
+  </update>
+</mapper>
